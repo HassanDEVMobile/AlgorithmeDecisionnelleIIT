@@ -6,9 +6,11 @@ from openpyxl import load_workbook
 class LireFichier:
 
    liste_donner = []
+   liste_produit = []
+
 
    chemin_csv = "chemin.csv"
-   def lire_fichier(self,chemin_openpyxl,chemin_csv,chemin_json):
+   def lire_fichier(self,chemin_openpyxl,chemin_csv,chemin_json,chemin_reference):
       liste1 = []
       wb = load_workbook(chemin_openpyxl)
       wk = wb.active
@@ -32,3 +34,8 @@ class LireFichier:
          for json_items in json_values["items"]:
                 liste3.append(json_items)
          self.liste_donner.append(liste3)
+
+      with open(chemin_reference,"r",encoding="utf-8") as csvfile:
+         dict_reader = csv.DictReader(csvfile)
+         for ligne_dict in dict_reader:
+            self.liste_produit.append(ligne_dict)
